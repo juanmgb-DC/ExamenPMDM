@@ -23,8 +23,7 @@ sealed class Estados {
         override fun enMovimiento() = true
     }
 
-    data class Error(val message: String) : Estados() {
+    object Error : Estados() {
         override val nombre = "Error"
-        override fun alEntrar() = println("Error, $message")
     }
 }

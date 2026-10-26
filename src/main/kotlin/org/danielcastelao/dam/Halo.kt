@@ -8,7 +8,7 @@ enum class Nivel(val valor: Int) {
 }
 
 class Halo {
-    val nivel_actual: Nivel = Nivel.avenida
+    var nivel_actual: Nivel = Nivel.avenida
         private set
 
     var estado_actual: Estados = Estados.Idle
@@ -32,15 +32,20 @@ class Halo {
         when (estado_actual) {
             is Estados.MovingUP -> {
                 nivel_actual = Nivel.plaza
-                cambiarEstado(Estados.Idle)
+                estado_actual= Estados.Idle
             }
             is Estados.MovingDOWN -> {
                 nivel_actual = Nivel.avenida
-                cambiarEstado(Estados.Idle)
+                estado_actual= Estados.Idle
             }
+            else -> {}
         }
     }
 
-    fun fallo() = cambiarEstado(Estados.Error)
+    fun fallo() {
+        estado_actual = Estados.Error
+        nivel_actual = Nivel.error
+    }
+
 
 }
