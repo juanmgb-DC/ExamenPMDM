@@ -6,8 +6,6 @@ sealed class Estados {
 
     open fun enMovimiento(): Boolean = false
 
-    open fun alEntrar() = println("Estado: $nombre")
-
     object Idle : Estados() {
         override val nombre = "En reposo"
         override fun enMovimiento() = false

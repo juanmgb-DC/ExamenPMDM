@@ -5,45 +5,42 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GestorTest {
+
+    private var halo = Halo()
     @AfterTest
     fun restaurarEstado() {
-        estado_acual = Estados.Idle
-        nivel_actual = 0
+       halo = Halo()
     }
 
     @Test
-    fun `gestor reinicia el nivel cuando el estado es Idle`() {
-        estado_acual = Estados.Idle
-        nivel_actual = 5
-
-        assertEquals(0, gestor())
-        assertEquals(0, nivel_actual)
+    fun `el nivel es 0 cuando el estado es Idle`() {
+        assertEquals(Estados.Idle,halo.estado_actual)
+        assertEquals(0, halo.nivel_actual.valor)
     }
 
     @Test
-    fun `gestor establece el nivel cuando el estado es MovingUP`() {
-        estado_acual = Estados.MovingUP
-        nivel_actual = 5
+    fun `el nivel es 2 cuando el estado es MovingUP`() {
+        halo.nivel_1()
 
-        assertEquals(2, gestor())
-        assertEquals(2, nivel_actual)
+        assertEquals(Estados.MovingUP,halo.estado_actual)
+        assertEquals(2, halo.nivel_actual.valor)
     }
 
     @Test
-    fun `gestor establece el nivel cuando el estado es MovingDOWN`() {
-        estado_acual = Estados.MovingDOWN
-        nivel_actual = 5
+    fun `el nivel es 2 cuando el estado es MovingDOWN`() {
+        halo.nivel_1()
+        halo.llegar()
+        halo.nivel_0()
 
-        assertEquals(2, gestor())
-        assertEquals(2, nivel_actual)
+        assertEquals(Estados.MovingDOWN, halo.estado_actual)
+        assertEquals(2, halo.nivel_actual.valor)
     }
 
     @Test
-    fun `gestor establece el nivel de error cuando el estado es Error`() {
-        estado_acual = Estados.Error
-        nivel_actual = 5
+    fun `el nivel es -1 cuando el estado es Error`() {
+        halo.fallo()
 
-        assertEquals(-1, gestor())
-        assertEquals(-1, nivel_actual)
+        assertEquals(Estados.Error, halo.estado_actual)
+        assertEquals(-1, halo.nivel_actual.valor)
     }
 }
